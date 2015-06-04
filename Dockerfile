@@ -39,7 +39,8 @@ RUN eselect python set python2.7
 RUN emerge -C python:3.2 python:3.3 app-misc/ca-certificates
 
 RUN eselect locale set en_US.utf8
-RUN . /etc/profile
+
+RUN rm -rf /etc/make.profile
 
 # Generate equo db, unfortunately we have to use expect
 ADD ./script/equo-rescue-generate.exp /
@@ -49,13 +50,16 @@ RUN rm -rfv /equo-rescue-generate.exp
 RUN cp -rfv /etc/entropy/repositories.conf.d/entropy_sabayonlinux.org.example /etc/entropy/repositories.conf.d/entropy_sabayonlinux.org
 RUN equo up
 
-RUN wget https://raw.githubusercontent.com/Sabayon/build/master/conf/intel/portage/package.license -O /etc/portage/package.license
 
 # Now we can clean from spinbase the stuff easily
 RUN equo rm --configfiles --deep dev-tcltk/expect dev-lang/tcl
 
-#RUN equo repo mirrorsort sabayonlinux.org
+RUN equo repo mirrorsort sabayonlinux.org
 
 RUN rm -rf /usr/portage/*
-#RUN equo i app-misc/ca-certificates
 
+RUN equo i app-misc/ca-certificates
+
+RUN wget https://raw.githubusercontent.com/Sabayon/build/master/conf/intel/portage/package.license -O /etc/portage/package.license
+
+RUN equo u
