@@ -10,18 +10,19 @@
 FROM plabedan/gentoo
 # python 2.7
 
+# Setting locales
+RUN echo "en_US.UTF-8 UTF-8 " >> /etc/locale.gen
+RUN locale-gen
+RUN eselect locale set en_US.utf8
+RUN env-update && source /etc/profile
+ENV LC_ALL=en_US.UTF-8
+
 # Make sure portage is synced and adding sabayon overlay
 RUN emerge --sync
 RUN layman -a sabayon
 
 # XXX: hackz need to be re-installed, fails in equo rescue generate phase
 RUN emerge -C =dev-python/python-exec-0.3.1
-
-# Setting locales
-RUN echo "en_US.UTF-8 UTF-8 " >> /etc/locale.gen
-RUN locale-gen
-RUN eselect locale set en_US.utf8
-RUN env-update && source /etc/profile
 
 # Adding required use flags
 ADD ./conf/00-sabayon.package.use /etc/portage/package.use/00-sabayon.package.use
@@ -38,7 +39,7 @@ RUN mkdir /usr/local/portage
 ADD ./script/generate-equo-db.sh /
 ADD ./ext/equo.sql /
 RUN chmod +x /generate-equo-db.sh
-RUN ./generate-equo-db.sh && rm -rfv /equo.sql /generate-equo-db.sh
+RUN ./generate-equo-db.sh && rm -rf /equo.sql /generate-equo-db.sh
 
 # Choosing only python2.7 for now, cleaning others
 RUN eselect python set python2.7
@@ -52,17 +53,17 @@ RUN rm -rf /etc/make.profile
 ADD ./script/equo-rescue-generate.exp /
 RUN chmod +x /equo-rescue-generate.exp
 RUN ./equo-rescue-generate.exp
-RUN rm -rfv /equo-rescue-generate.exp
+RUN rm -rf /equo-rescue-generate.exp
 
 # Updating repository db
-RUN cp -rfv /etc/entropy/repositories.conf.d/entropy_sabayonlinux.org.example /etc/entropy/repositories.conf.d/entropy_sabayonlinux.org
+RUN mv /etc/entropy/repositories.conf.d/entropy_sabayonlinux.org.example /etc/entropy/repositories.conf.d/entropy_sabayonlinux.org
 RUN equo up
 
 # Sorting mirrors
 RUN equo repo mirrorsort sabayonlinux.org
 
 # Removing portage and keeping profiles and metadata
-RUN cd /usr/portage/;ls | grep -v 'profiles' | grep -v 'metadata' | xargs rm -rfv
+RUN cd /usr/portage/;ls | grep -v 'profiles' | grep -v 'metadata' | xargs rm -rf
 
 # Accepting licenses needed to continue automatic install/upgrade
 ADD ./conf/spinbase-licenses /etc/entropy/packages/license.accept
