@@ -73,7 +73,7 @@ RUN cd /usr/portage/;ls | grep -v 'profiles' | xargs rm -rfv
 ADD ./conf/spinbase-licenses /etc/entropy/packages/license.accept
 
 # Specifying a gentoo profile
-RUN eselect profile set 3 
+RUN eselect profile set default/linux/amd64/13.0/desktop
 
 # Portage configurations
 ADD ./script/sabayon-build.sh /sabayon-build.sh
