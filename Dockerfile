@@ -79,9 +79,6 @@ RUN rm -rf /sabayon-build.sh
 
 RUN equo u
 
-# Setting locales with localect
-RUN localectl set-locale LANG=en_US.UTF-8
-
 ENV PACKAGES_TO_REMOVE="sys-devel/llvm dev-libs/ppl app-admin/sudo x11-libs/gtk+:3 x11-libs/gtk+:2 mariadb sys-fs/ntfs3g app-accessibility/at-spi2-core app-accessibility/at-spi2-atk sys-devel/base-gcc:4.7 sys-devel/gcc:4.7 net-print/cups"
 ENV PACKAGES_TO_ADD="app-text/pastebunz dev-lang/python-exec-0.3.1-r1 sys-boot/grub:2"
 
