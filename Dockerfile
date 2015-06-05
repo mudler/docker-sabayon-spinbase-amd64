@@ -85,7 +85,7 @@ ENV PACKAGES_TO_ADD="app-text/pastebunz dev-lang/python-exec-0.3.1-r1 sys-boot/g
 # Handling install/removal of packages specified in env (and also the basic needed)
 # XXX: sabayon-artwork-core and linux-sabayon should be moved in molecules file
 RUN equo i app-misc/ca-certificates linux-sabayon sabayon-artwork-core sabayon-version sabayon-artwork-grub $PACKAGES_TO_ADD
-RUN equo rm $PACKAGES_TO_REMOVE
+RUN equo rm --force-system $PACKAGES_TO_REMOVE
 
 # Cleaning accepted licenses
 RUN rm -rf /etc/entropy/packages/license.accept
