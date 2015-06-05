@@ -77,6 +77,12 @@ RUN chmod +x /sabayon-build.sh
 RUN ./sabayon-build.sh
 RUN rm -rf /sabayon-build.sh
 
+# Defyning /usr/local/portage configuration
+RUN mkdir -p /usr/local/portage/metadata/
+RUN mkdir -p /usr/local/portage/profiles/
+RUN echo "masters = gentoo" > /usr/local/portage/metadata/layout.conf
+RUN echo "user_defined" > /usr/local/portage/profiles/repo_name
+
 RUN equo u
 
 ENV PACKAGES_TO_REMOVE="sys-devel/llvm dev-libs/ppl app-admin/sudo x11-libs/gtk+:3 x11-libs/gtk+:2 mariadb sys-fs/ntfs3g app-accessibility/at-spi2-core app-accessibility/at-spi2-atk sys-devel/base-gcc:4.7 sys-devel/gcc:4.7 net-print/cups"
