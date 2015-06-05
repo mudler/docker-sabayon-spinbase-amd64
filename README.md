@@ -11,9 +11,13 @@ Ensure to have the daemon started and running:
 
     sudo systemctl start docker
 
-## Building docker-sabayon-spinbase
+## Building docker-sabayon-spinbase locally
 
     git clone https://github.com/mudler/docker-sabayon-spinbase-amd64.git docker-sabayon-spinbase
     cd docker-sabayon-spinbase
     sudo docker build -t mudler/docker-sabayon-spinbase .
+
+## From Docker Hub
+
+    sudo docker pull sabayon/spinbase-amd64
 
