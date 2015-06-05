@@ -12,10 +12,10 @@ ln -sf package.env.amd64 package.env
 git add make.conf package.env
 git config --global user.name "root"
 git config --global user.email "root@localhost"
-git commit
+git commit -m "saving my configurations"
 # rename the gentoo /etc/make.conf and /etc/portage/:
 cd /etc/
 mv portage portage-gentoo
-mv make.conf make.conf-gentoo
+#mv make.conf make.conf-gentoo
 # symlink to sabayon /etc/make.conf /etc/portage/:
 ln -sf /opt/sabayon-build/conf/intel/portage portage

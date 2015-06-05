@@ -74,8 +74,6 @@ ADD ./conf/spinbase-licenses /etc/entropy/packages/license.accept
 # Specifying a gentoo profile
 RUN eselect profile set 3 
 
-RUN equo i app-misc/ca-certificates --relaxed --nodeps
-
 # Portage configurations
 ADD ./script/sabayon-build.sh /sabayon-build.sh
 RUN chmod +x /sabayon-build.sh
@@ -86,7 +84,7 @@ RUN equo u
 
 # Handling install/removal of packages specified in env (and also the basic needed)
 # XXX: sabayon-artwork-core and linux-sabayon should be moved in molecules file
-RUN equo i linux-sabayon sabayon-artwork-core sabayon-version $PACKAGES_TO_ADD
+RUN equo i app-misc/ca-certificates linux-sabayon sabayon-artwork-core sabayon-version $PACKAGES_TO_ADD
 RUN equo rm $PACKAGES_TO_REMOVE
 
 # Cleaning accepted licenses
