@@ -10,8 +10,8 @@
 FROM plabedan/gentoo
 # python 2.7
 
-ENV PACKAGES_TO_REMOVE="sys-devel/llvm dev-libs/ppl app-admin/sudo x11-libs/gtk+:3 x11-libs/gtk+:2 mariadb sys-fs/ntfs3g"
-ENV PACKAGES_TO_ADD="app-text/pastebunz dev-lang/python-exec-0.3.1-r1"
+ENV PACKAGES_TO_REMOVE="sys-devel/llvm dev-libs/ppl app-admin/sudo x11-libs/gtk+:3 x11-libs/gtk+:2 mariadb sys-fs/ntfs3g app-accessibility/at-spi2-core app-accessibility/at-spi2-atk sys-devel/base-gcc:4.7 sys-devel/gcc:4.7 net-print/cups"
+ENV PACKAGES_TO_ADD="app-text/pastebunz dev-lang/python-exec-0.3.1-r1 sys-boot/grub:2"
 
 # Make sure portage is synced and adding sabayon overlay
 RUN emerge --sync
@@ -35,6 +35,7 @@ ADD ./conf/00-sabayon.package.keywords /etc/portage/package.keywords/00-sabayon.
 # emerging equo and expect
 RUN emerge -vt equo --autounmask-write
 RUN emerge expect
+RUN mkdir /usr/local/portage
 
 # Generating empty equo db
 ADD ./script/generate-equo-db.sh /
@@ -84,7 +85,7 @@ RUN equo u
 
 # Handling install/removal of packages specified in env (and also the basic needed)
 # XXX: sabayon-artwork-core and linux-sabayon should be moved in molecules file
-RUN equo i app-misc/ca-certificates linux-sabayon sabayon-artwork-core sabayon-version $PACKAGES_TO_ADD
+RUN equo i app-misc/ca-certificates linux-sabayon sabayon-artwork-core sabayon-version sabayon-artwork-grub $PACKAGES_TO_ADD
 RUN equo rm $PACKAGES_TO_REMOVE
 
 # Cleaning accepted licenses
