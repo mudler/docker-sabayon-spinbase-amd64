@@ -65,8 +65,8 @@ RUN equo up
 # Sorting mirrors
 RUN equo repo mirrorsort sabayonlinux.org
 
-# Removing portage
-RUN rm -rf /usr/portage/*
+# Removing portage and keeping profiles
+RUN cd /usr/portage/;ls | grep -v 'profiles' | xargs rm -rfv
 
 # Accepting licenses needed to continue automatic install/upgrade
 ADD ./conf/spinbase-licenses /etc/entropy/packages/license.accept
@@ -86,7 +86,7 @@ RUN equo u
 
 # Handling install/removal of packages specified in env (and also the basic needed)
 # XXX: sabayon-artwork-core and linux-sabayon should be moved in molecules file
-RUN equo i linux-sabayon sabayon-artwork-core $PACKAGES_TO_ADD
+RUN equo i linux-sabayon sabayon-artwork-core sabayon-version $PACKAGES_TO_ADD
 RUN equo rm $PACKAGES_TO_REMOVE
 
 # Cleaning accepted licenses
