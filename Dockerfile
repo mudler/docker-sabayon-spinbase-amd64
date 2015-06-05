@@ -61,8 +61,8 @@ RUN equo up
 # Sorting mirrors
 RUN equo repo mirrorsort sabayonlinux.org
 
-# Removing portage and keeping profiles
-RUN cd /usr/portage/;ls | grep -v 'profiles' | xargs rm -rfv
+# Removing portage and keeping profiles and metadata
+RUN cd /usr/portage/;ls | grep -v 'profiles' | grep -v 'metadata' | xargs rm -rfv
 
 # Accepting licenses needed to continue automatic install/upgrade
 ADD ./conf/spinbase-licenses /etc/entropy/packages/license.accept
