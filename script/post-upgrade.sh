@@ -123,3 +123,6 @@ rm -rf /post-upgrade.sh
 rm -rf /sabayon-configuration-build.sh
 rm -rf /sabayon-configuration.sh
 rm -rf /post-upgrade.sh
+
+# Cleaning portage metadata cache
+rm -rf /usr/portage/metadata/md5-cache/*
