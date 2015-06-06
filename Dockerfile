@@ -33,6 +33,9 @@ ADD ./conf/spinbase-licenses /etc/entropy/packages/license.accept
 # Upgrading packages
 RUN equo u && echo -5 | equo conf update
 
+# We ensure to have those packages from the beginning
+RUN equo i sys-boot/grub:2 linux-sabayon sabayon-artwork-core sabayon-version sabayon-artwork-grub sabayon-live
+
 # Perform post-upgrade tasks (mirror sorting, updating repository db)
 ADD ./script/post-upgrade.sh /post-upgrade.sh
 RUN /bin/bash /post-upgrade.sh  && rm -rf /post-upgrade.sh

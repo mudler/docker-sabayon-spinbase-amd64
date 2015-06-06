@@ -73,10 +73,9 @@ PACKAGES_TO_ADD=(
     "app-admin/perl-cleaner"
 )
 
-# Handling install/removal of packages specified in env (and also the basic needed)
+# Handling install/removal of packages specified in env
 
-# XXX: sabayon-artwork-core and linux-sabayon should be moved in molecules file
-equo i sys-boot/grub:2 linux-sabayon sabayon-artwork-core sabayon-version sabayon-artwork-grub sabayon-live "${PACKAGES_TO_ADD[@]}"
+equo i "${PACKAGES_TO_ADD[@]}"
 equo rm --deep --configfiles --force-system "${PACKAGES_TO_REMOVE[@]}"
 
 # Cleaning accepted licenses
@@ -106,7 +105,3 @@ echo FONT=LatArCyrHeb-16 > /etc/vconsole.conf
 # remove LDAP keys
 rm -f /etc/openldap/ssl/ldap.pem /etc/openldap/ssl/ldap.key \
 /etc/openldap/ssl/ldap.csr /etc/openldap/ssl/ldap.crt
-
-# setup /etc/hosts, add sabayon as default hostname (required by Xfce)
-sed -i "/^127.0.0.1/ s/localhost/localhost sabayon/" /etc/hosts
-sed -i "/^::1/ s/localhost/localhost sabayon/" /etc/hosts
