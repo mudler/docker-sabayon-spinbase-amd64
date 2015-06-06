@@ -84,8 +84,8 @@ PACKAGES_TO_ADD=(
 
 # Handling install/removal of packages specified in env
 
-equo i "${PACKAGES_TO_ADD[@]}"
 equo rm --deep --configfiles --force-system "${PACKAGES_TO_REMOVE[@]}"
+equo i "${PACKAGES_TO_ADD[@]}"
 
 # Cleaning accepted licenses
 rm -rf /etc/entropy/packages/license.accept
