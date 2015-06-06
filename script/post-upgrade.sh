@@ -67,6 +67,13 @@ PACKAGES_TO_REMOVE=(
     "app-text/sgml-common"
     "virtual/python-argparse"
     "sys-power/upower"
+    "dev-python/py"
+    "dev-vcs/git"
+    "dev-tcltk/expect"
+    "app-admin/python-updater"
+    "app-portage/eix"
+    "app-portage/gentoolkit"
+    "app-portage/gentoopm"
 )
 
 PACKAGES_TO_ADD=(
