@@ -100,3 +100,7 @@ RUN echo -5 | equo conf update
 RUN equo q list installed -qv > /etc/sabayon-pkglist 
 # Cleaning equo package cache
 RUN equo cleanup
+
+# Setting locale.conf
+RUN echo 'LANG="en_US.UTF-8"' > /etc/locale.conf
+RUN echo 'LC_CTYPE="en_US.UTF-8"' >> /etc/locale.conf
