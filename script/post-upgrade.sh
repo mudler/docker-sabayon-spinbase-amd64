@@ -114,3 +114,11 @@ echo FONT=LatArCyrHeb-16 > /etc/vconsole.conf
 # remove LDAP keys
 rm -f /etc/openldap/ssl/ldap.pem /etc/openldap/ssl/ldap.key \
 /etc/openldap/ssl/ldap.csr /etc/openldap/ssl/ldap.crt
+
+# Remove scripts
+rm -rf /equo-rescue-generate.exp
+rm -rf /equo.sql
+rm -rf /generate-equo-db.sh
+rm -rf /post-upgrade.sh
+rm -rf /sabayon-configuration-build.sh
+rm -rf /sabayon-configuration.sh
