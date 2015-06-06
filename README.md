@@ -23,9 +23,29 @@ Ensure to have the daemon started and running:
 
 ## Converting the image from Docker to use it with [Molecules](https://github.com/Sabayon/molecules)
 
+### Only with undocker, without squashing the layers
+
 After pulling the docker image, install [undocker](https://github.com/larsks/undocker/) and then as root:
 
     docker save sabayon/spinbase-amd64:latest | undocker -i -o spinbase sabayon/spinbase-amd64:latest
 
-You can also squash the image with [docker-squash](https://github.com/jwilder/docker-squash) and then extract your layers
-The squash can also been accomplished creating a container from the image, exporting it and then importing it back. Docker will loose the history revision and then you can estract the layer, using as base for charoot
+### Using [docker-squash](https://github.com/jwilder/docker-squash)
+You can also squash the image with [docker-squash](https://github.com/jwilder/docker-squash) and then extract your layers.
+
+    sudo docker save sabayon-spinbase:latest | sudo TMPDIR=/dev/shm docker-squash -t sabayon-spinbase:squashed > /your/prefered/path/Spinbase.tar
+
+You can replace /dev/shm with your prefered tmpdir
+
+### With undocker, but squashing the layers
+
+The squash can also been accomplished creating a container from the image, exporting it and then importing it back. 
+
+    sudo docker run -t -i sabayon-spinbase:latest /bin/bash
+    $ exit # You should drop in a shell, exit, you should see a container id, otherwise find it :
+    sudo docker ps -l
+    sudo docker export <CONTAINER ID> | docker import - sabayon-spinbase:squashed
+    docker save sabayon/spinbase:squashed | undocker -i -o spinbase sabayon/spinbase:squashed
+
+Docker will loose the history revision and then you can estract the layer, using as base for chroot.
+
+You now have the tree on the *spinbase/* directory
