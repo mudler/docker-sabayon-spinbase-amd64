@@ -44,8 +44,7 @@ RUN ./generate-equo-db.sh && rm -rf /equo.sql /generate-equo-db.sh
 # Choosing only python2.7 for now, cleaning others
 RUN eselect python set python2.7
 
-# XXX: hackz ca-certificates need to be re-installed, fails in equo rescue generate phase
-RUN emerge -C python:3.2 python:3.3 app-misc/ca-certificates
+RUN emerge -C python:3.2 python:3.3
 
 RUN rm -rf /etc/make.profile
 
@@ -85,12 +84,12 @@ RUN echo "user_defined" > /usr/local/portage/profiles/repo_name
 
 RUN equo u
 
-ENV PACKAGES_TO_REMOVE="sys-devel/llvm dev-libs/ppl app-admin/sudo x11-libs/gtk+:3 x11-libs/gtk+:2 mariadb sys-fs/ntfs3g app-accessibility/at-spi2-core app-accessibility/at-spi2-atk sys-devel/base-gcc:4.7 sys-devel/gcc:4.7 net-print/cups"
+ENV PACKAGES_TO_REMOVE="sys-devel/llvm dev-libs/ppl app-admin/sudo x11-libs/gtk+:3 x11-libs/gtk+:2 mariadb sys-fs/ntfs3g app-accessibility/at-spi2-core app-accessibility/at-spi2-atk sys-devel/base-gcc:4.7 sys-devel/gcc:4.7 net-print/cups  dev-util/gtk-update-icon-cache dev-qt/qtscript dev-qt/qtchooser dev-qt/qtcore"
 ENV PACKAGES_TO_ADD="app-text/pastebunz dev-lang/python-exec-0.3.1-r1 sys-boot/grub:2"
 
 # Handling install/removal of packages specified in env (and also the basic needed)
 # XXX: sabayon-artwork-core and linux-sabayon should be moved in molecules file
-RUN equo i app-misc/ca-certificates linux-sabayon sabayon-artwork-core sabayon-version sabayon-artwork-grub $PACKAGES_TO_ADD
+RUN equo i linux-sabayon sabayon-artwork-core sabayon-version sabayon-artwork-grub $PACKAGES_TO_ADD
 RUN equo rm --force-system $PACKAGES_TO_REMOVE
 
 # Cleaning accepted licenses
