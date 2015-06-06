@@ -22,7 +22,7 @@ RUN /usr/bin/expect /equo-rescue-generate.exp &&  rm -rf /equo-rescue-generate.e
 
 # Portage configurations
 ADD ./script/sabayon-configuration-build.sh /sabayon-configuration-build.sh
-RUN /bin/bash /sabayon-configuration-build.sh && rm -rf /sabayon-build.sh
+RUN /bin/bash /sabayon-configuration-build.sh && rm -rf /sabayon-configuration-build.sh
 
 # Perform before-upgrade tasks (mirror sorting, updating repository db, removing portage and keeping profiles and metadata)
 RUN mv /etc/entropy/repositories.conf.d/entropy_sabayonlinux.org.example /etc/entropy/repositories.conf.d/entropy_sabayonlinux.org && equo up && equo repo mirrorsort sabayonlinux.org && cd /usr/portage/;ls | grep -v 'profiles' | grep -v 'metadata' | xargs rm -rf
