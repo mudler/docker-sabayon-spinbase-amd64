@@ -14,8 +14,7 @@ mkdir -p /usr/local/portage/profiles/
 echo "masters = gentoo" > /usr/local/portage/metadata/layout.conf
 echo "user_defined" > /usr/local/portage/profiles/repo_name
 
-emerge --sync
-layman -a sabayon
+emerge -C =dev-python/python-exec-0.3.1
 
 mkdir -p /etc/portage/package.keywords/
 echo "app-admin/equo ~amd64
@@ -29,8 +28,8 @@ sys-apps/file python
 
 
 # emerging equo and expect
-emerge -vt equo --autounmask-write
-emerge expect
+emerge -vt equo --autounmask-write || exit 1
+emerge expect || exit 1
 
 # Choosing only python2.7 for now, cleaning others
 eselect python set python2.7
