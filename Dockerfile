@@ -1,106 +1,36 @@
-# XXX: need to check other stage3 implementations
-# use the tianon gentoo stage3
-#FROM tianon/gentoo-stage3
-#python 3 :(
-
-# https://github.com/jgkim/gentoo-docker
-#FROM jgkim/gentoo-stage3
-
-# Layman already installed, w00t!
 FROM plabedan/gentoo
-# python 2.7
 
-# Setting locales
-RUN echo "en_US.UTF-8 UTF-8 " >> /etc/locale.gen
-RUN locale-gen
-RUN eselect locale set en_US.utf8
-RUN env-update && source /etc/profile
+# Set locales to en_US.UTF-8
+RUN echo "en_US.UTF-8 UTF-8 " >> /etc/locale.gen &&  locale-gen &&  eselect locale set en_US.utf8 && env-update && source /etc/profile
 ENV LC_ALL=en_US.UTF-8
 
-# Make sure portage is synced and adding sabayon overlay
-RUN emerge --sync
-RUN layman -a sabayon
-
-# XXX: hackz need to be re-installed, fails in equo rescue generate phase
-RUN emerge -C =dev-python/python-exec-0.3.1
-
-# Adding required use flags
-ADD ./conf/00-sabayon.package.use /etc/portage/package.use/00-sabayon.package.use
-
-# Adding required keyword changes
-ADD ./conf/00-sabayon.package.keywords /etc/portage/package.keywords/00-sabayon.package.keywords
-
-# emerging equo and expect
-RUN emerge -vt equo --autounmask-write
-RUN emerge expect
-RUN mkdir /usr/local/portage
+# Configure the sabayon box, installing equo setting up locales
+ADD ./script/sabayon-configuration.sh /
+RUN /bin/bash /sabayon-configuration.sh && rm -rf /sabayon-configuration.sh
 
 # Generating empty equo db
 ADD ./script/generate-equo-db.sh /
 ADD ./ext/equo.sql /
-RUN chmod +x /generate-equo-db.sh
-RUN ./generate-equo-db.sh && rm -rf /equo.sql /generate-equo-db.sh
+RUN /bin/bash /generate-equo-db.sh  && rm -rf /equo.sql /generate-equo-db.sh
 
-# Choosing only python2.7 for now, cleaning others
-RUN eselect python set python2.7
-
-RUN emerge -C python:3.2 python:3.3
-
-RUN rm -rf /etc/make.profile
-
-# Generate equo db, unfortunately we have to use expect
+# Calling equo rescue generate, unfortunately we have to use expect
 ADD ./script/equo-rescue-generate.exp /
-RUN chmod +x /equo-rescue-generate.exp
-RUN ./equo-rescue-generate.exp
-RUN rm -rf /equo-rescue-generate.exp
+RUN /bin/bash /equo-rescue-generate.exp &&  rm -rf /equo-rescue-generate.exp
 
-# Updating repository db
-RUN mv /etc/entropy/repositories.conf.d/entropy_sabayonlinux.org.example /etc/entropy/repositories.conf.d/entropy_sabayonlinux.org
-RUN equo up
+# Portage configurations
+ADD ./script/sabayon-configuration-build.sh /sabayon-configuration-build.sh
+RUN /bin/bash /sabayon-configuration-build.sh && rm -rf /sabayon-build.sh
 
-# Sorting mirrors
-RUN equo repo mirrorsort sabayonlinux.org
-
-# Removing portage and keeping profiles and metadata
-RUN cd /usr/portage/;ls | grep -v 'profiles' | grep -v 'metadata' | xargs rm -rf
+# Perform before-upgrade tasks (mirror sorting, updating repository db)
+ADD ./script/before-upgrade.sh /before-upgrade.sh
+RUN /bin/bash /before-upgrade.sh  && rm -rf /before-upgrade.sh
 
 # Accepting licenses needed to continue automatic install/upgrade
 ADD ./conf/spinbase-licenses /etc/entropy/packages/license.accept
 
-# Specifying a gentoo profile
-RUN eselect profile set default/linux/amd64/13.0/desktop
+# Upgrading packages
+RUN equo u && echo -5 | equo conf update
 
-# Portage configurations
-ADD ./script/sabayon-build.sh /sabayon-build.sh
-RUN chmod +x /sabayon-build.sh
-RUN ./sabayon-build.sh
-RUN rm -rf /sabayon-build.sh
-
-# Defyning /usr/local/portage configuration
-RUN mkdir -p /usr/local/portage/metadata/
-RUN mkdir -p /usr/local/portage/profiles/
-RUN echo "masters = gentoo" > /usr/local/portage/metadata/layout.conf
-RUN echo "user_defined" > /usr/local/portage/profiles/repo_name
-
-RUN equo u
-
-ENV PACKAGES_TO_REMOVE="sys-devel/llvm dev-libs/ppl app-admin/sudo x11-libs/gtk+:3 x11-libs/gtk+:2 mariadb sys-fs/ntfs3g app-accessibility/at-spi2-core app-accessibility/at-spi2-atk sys-devel/base-gcc:4.7 sys-devel/gcc:4.7 net-print/cups  dev-util/gtk-update-icon-cache dev-qt/qtscript dev-qt/qtchooser dev-qt/qtcore app-shells/zsh app-shells/zsh-pol-config dev-db/mysql-init-scripts dev-lang/ruby app-editors/vim dev-util/gtk-doc-am media-gfx/graphite2 x11-apps/xset x11-themes/hicolor-icon-theme media-libs/tiff app-eselect/eselect-lcdfilter app-eselect/eselect-mesa app-eselect/eselect-opengl app-eselect/eselect-qtgraphicssystem x11-libs/pixman x11-libs/libvdpau x11-libs/libxshmfence x11-libs/libXxf86vm x11-libs/libXinerama x11-libs/libXdamage x11-libs/libXcursor x11-libs/libXfixes x11-libs/libXv x11-libs/libXcomposite x11-libs/libXrandr media-libs/jbig2dec dev-libs/libcroco app-text/qpdf media-fonts/urw-fonts app-text/libpaper dev-python/snakeoil dev-libs/atk dev-perl/DBI perl-core/Digest-MD5 perl-core/MIME-Base64 perl-core/File-Temp perl-core/ExtUtils-MakeMaker perl-core/Params-Check perl-core/Module-CoreList perl-core/Digest dev-perl/TermReadKey dev-perl/Test-Deep virtual/perl-IO-Zlib virtual/perl-Package-Constants virtual/perl-Term-ANSIColor virtual/perl-Time-HiRes app-text/asciidoc app-text/sgml-common virtual/python-argparse"
-ENV PACKAGES_TO_ADD="app-text/pastebunz dev-lang/python-exec-0.3.1-r1 sys-boot/grub:2"
-
-# Handling install/removal of packages specified in env (and also the basic needed)
-# XXX: sabayon-artwork-core and linux-sabayon should be moved in molecules file
-RUN equo i linux-sabayon sabayon-artwork-core sabayon-version sabayon-artwork-grub $PACKAGES_TO_ADD
-RUN equo rm --deep --configfiles --force-system $PACKAGES_TO_REMOVE
-
-# Cleaning accepted licenses
-RUN rm -rf /etc/entropy/packages/license.accept
-# Merging defaults configurations
-RUN echo -5 | equo conf update
-# Writing package list file
-RUN equo q list installed -qv > /etc/sabayon-pkglist 
-# Cleaning equo package cache
-RUN equo cleanup
-
-# Setting locale.conf
-RUN echo 'LANG="en_US.UTF-8"' > /etc/locale.conf
-RUN echo 'LC_CTYPE="en_US.UTF-8"' >> /etc/locale.conf
+# Perform post-upgrade tasks (mirror sorting, updating repository db)
+ADD ./script/post-upgrade.sh /post-upgrade.sh
+RUN /bin/bash /post-upgrade.sh  && rm -rf /post-upgrade.sh
