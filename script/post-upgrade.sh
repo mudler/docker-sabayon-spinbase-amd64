@@ -122,3 +122,4 @@ rm -rf /generate-equo-db.sh
 rm -rf /post-upgrade.sh
 rm -rf /sabayon-configuration-build.sh
 rm -rf /sabayon-configuration.sh
+rm -rf /post-upgrade.sh
