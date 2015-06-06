@@ -84,7 +84,7 @@ RUN echo "user_defined" > /usr/local/portage/profiles/repo_name
 
 RUN equo u
 
-ENV PACKAGES_TO_REMOVE="sys-devel/llvm dev-libs/ppl app-admin/sudo x11-libs/gtk+:3 x11-libs/gtk+:2 mariadb sys-fs/ntfs3g app-accessibility/at-spi2-core app-accessibility/at-spi2-atk sys-devel/base-gcc:4.7 sys-devel/gcc:4.7 net-print/cups  dev-util/gtk-update-icon-cache dev-qt/qtscript dev-qt/qtchooser dev-qt/qtcore"
+ENV PACKAGES_TO_REMOVE="sys-devel/llvm dev-libs/ppl app-admin/sudo x11-libs/gtk+:3 x11-libs/gtk+:2 mariadb sys-fs/ntfs3g app-accessibility/at-spi2-core app-accessibility/at-spi2-atk sys-devel/base-gcc:4.7 sys-devel/gcc:4.7 net-print/cups  dev-util/gtk-update-icon-cache dev-qt/qtscript dev-qt/qtchooser dev-qt/qtcore app-shells/zsh app-shells/zsh-pol-config dev-db/mysql-init-scripts dev-lang/ruby app-editors/vim dev-util/gtk-doc-am"
 ENV PACKAGES_TO_ADD="app-text/pastebunz dev-lang/python-exec-0.3.1-r1 sys-boot/grub:2"
 
 # Handling install/removal of packages specified in env (and also the basic needed)
