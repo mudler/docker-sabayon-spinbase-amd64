@@ -21,3 +21,11 @@ Ensure to have the daemon started and running:
 
     sudo docker pull sabayon/spinbase-amd64
 
+## From Docker to Molecules
+
+After pulling the docker image, install [undocker](https://github.com/larsks/undocker/) and then as root:
+
+    docker save sabayon/spinbase-amd64:latest | undocker -i -o spinbase sabayon/spinbase-amd64:latest
+
+You can also squash the image with [docker-squash](https://github.com/jwilder/docker-squash) and then extract your layers
+The squash can also been accomplished creating a container from the image, exporting it and then importing it back. Docker will loose the history revision and then you can estract the layer, using as base for charoot
