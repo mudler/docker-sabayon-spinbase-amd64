@@ -79,6 +79,7 @@ PACKAGES_TO_REMOVE=(
 PACKAGES_TO_ADD=(
     "app-text/pastebunz"
     "app-admin/perl-cleaner"
+    "sys-apps/grep"
 )
 
 # Handling install/removal of packages specified in env
