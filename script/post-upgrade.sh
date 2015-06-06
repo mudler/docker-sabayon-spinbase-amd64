@@ -66,6 +66,7 @@ PACKAGES_TO_REMOVE=(
     "app-text/asciidoc"
     "app-text/sgml-common"
     "virtual/python-argparse"
+    "sys-power/upower"
 )
 
 PACKAGES_TO_ADD=(

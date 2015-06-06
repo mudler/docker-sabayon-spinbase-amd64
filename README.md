@@ -11,17 +11,17 @@ Ensure to have the daemon started and running:
 
     sudo systemctl start docker
 
-## Building docker-sabayon-spinbase locally
+## Building sabayon-spinbase locally
 
     git clone https://github.com/mudler/docker-sabayon-spinbase-amd64.git docker-sabayon-spinbase
     cd docker-sabayon-spinbase
     sudo docker build -t mudler/docker-sabayon-spinbase .
 
-## From Docker Hub
+## Pulling sabayon-spinbase from Docker Hub
 
     sudo docker pull sabayon/spinbase-amd64
 
-## From Docker to Molecules
+## Converting the image from Docker to use it with [Molecules](https://github.com/Sabayon/molecules)
 
 After pulling the docker image, install [undocker](https://github.com/larsks/undocker/) and then as root:
 
