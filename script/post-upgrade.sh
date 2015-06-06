@@ -90,3 +90,23 @@ equo q list installed -qv > /etc/sabayon-pkglist
 
 # Cleaning equo package cache
 equo cleanup
+
+# Cleanup Perl cruft
+perl-cleaner --ph-clean
+
+# remove SSH keys
+rm -rf /etc/ssh/*_key*
+
+# Needed by systemd, because it doesn't properly set a good
+# encoding in ttys. Test it with (on tty1, VT1):
+# echo -e "\xE2\x98\xA0"
+# TODO: check if the issue persists with systemd 202.
+echo FONT=LatArCyrHeb-16 > /etc/vconsole.conf
+
+# remove LDAP keys
+rm -f /etc/openldap/ssl/ldap.pem /etc/openldap/ssl/ldap.key \
+/etc/openldap/ssl/ldap.csr /etc/openldap/ssl/ldap.crt
+
+# setup /etc/hosts, add sabayon as default hostname (required by Xfce)
+sed -i "/^127.0.0.1/ s/localhost/localhost sabayon/" /etc/hosts
+sed -i "/^::1/ s/localhost/localhost sabayon/" /etc/hosts

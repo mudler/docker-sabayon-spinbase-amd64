@@ -18,7 +18,7 @@ RUN /bin/bash /generate-equo-db.sh  && rm -rf /equo.sql /generate-equo-db.sh
 
 # Calling equo rescue generate, unfortunately we have to use expect
 ADD ./script/equo-rescue-generate.exp /
-RUN /bin/bash /equo-rescue-generate.exp &&  rm -rf /equo-rescue-generate.exp
+RUN /usr/bin/expect /equo-rescue-generate.exp &&  rm -rf /equo-rescue-generate.exp
 
 # Portage configurations
 ADD ./script/sabayon-configuration-build.sh /sabayon-configuration-build.sh
