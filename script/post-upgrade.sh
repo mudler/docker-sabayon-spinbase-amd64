@@ -80,6 +80,12 @@ PACKAGES_TO_ADD=(
     "app-text/pastebunz"
     "app-admin/perl-cleaner"
     "sys-apps/grep"
+    "app-misc/sabayon-live"
+    "sys-boot/grub:2"
+    "sys-kernel/linux-sabayon"
+    "x11-themes/sabayon-artwork-core"
+    "app-misc/sabayon-version"
+    "x11-themes/sabayon-artwork-grub"
 )
 
 # Handling install/removal of packages specified in env
