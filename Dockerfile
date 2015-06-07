@@ -5,7 +5,7 @@ RUN echo "en_US.UTF-8 UTF-8 " >> /etc/locale.gen &&  locale-gen &&  eselect loca
 ENV LC_ALL=en_US.UTF-8
 
 # Upgrading portage
-RUN emerge --sync && layman -a sabayon
+RUN emerge --sync > /dev/null 2>&1 && layman -a sabayon
 
 # Configure the sabayon box, installing equo setting up locales
 ADD ./script/sabayon-configuration.sh /
