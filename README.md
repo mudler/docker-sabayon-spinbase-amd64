@@ -46,7 +46,7 @@ The squash can also been accomplished creating a container from the image, expor
     $ exit # You should drop in a shell, exit, you should see a container id, otherwise find it :
     sudo docker ps -l
     sudo docker export <CONTAINER ID> | docker import - sabayon/spinbase-amd64:squashed
-    docker save sabayon/spinbase:squashed | undocker -i -o spinbase sabayon/spinbase:squashed
+    docker save sabayon/spinbase-amd64:squashed | undocker -i -o spinbase sabayon/spinbase-amd64:squashed
 
 Docker will loose the history revision and then you can estract the layer, using as base for chroot.
 
