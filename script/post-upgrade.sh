@@ -86,6 +86,7 @@ PACKAGES_TO_ADD=(
     "x11-themes/sabayon-artwork-core"
     "app-misc/sabayon-version"
     "x11-themes/sabayon-artwork-grub"
+    "app-crypt/gnupg"
 )
 
 # Handling install/removal of packages specified in env
