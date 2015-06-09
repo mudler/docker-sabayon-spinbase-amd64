@@ -134,3 +134,5 @@ rm -rf /post-upgrade.sh
 
 # Cleaning portage metadata cache
 rm -rf /usr/portage/metadata/md5-cache/*
+rm -rf /var/log/*
+rm -rf /root/*
