@@ -43,6 +43,9 @@ eselect profile set default/linux/amd64/13.0/desktop
 # default to opendns for next stage(s)
 echo "nameserver 208.67.222.222" > /etc/resolv.conf
 
+# set default shell
+chsh -s /bin/bash
+
 rm -rf /etc/make.profile
 
 
