@@ -77,6 +77,7 @@ PACKAGES_TO_REMOVE=(
 )
 
 PACKAGES_TO_ADD=(
+    "app-eselect/eselect-bzimage"
     "app-text/pastebunz"
     "app-admin/perl-cleaner"
     "sys-apps/grep"
@@ -92,8 +93,13 @@ PACKAGES_TO_ADD=(
 
 # Handling install/removal of packages specified in env
 
+equo repo mirrorsort sabayonlinux.org
+equo up 
 equo rm --deep --configfiles --force-system "${PACKAGES_TO_REMOVE[@]}"
 equo i "${PACKAGES_TO_ADD[@]}"
+
+# Setting bzimage
+eselect bzimage set 1
 
 # Cleaning accepted licenses
 rm -rf /etc/entropy/packages/license.accept
