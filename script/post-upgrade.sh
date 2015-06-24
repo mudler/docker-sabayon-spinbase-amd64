@@ -76,6 +76,14 @@ PACKAGES_TO_REMOVE=(
     "app-portage/gentoopm"
 )
 
+FILES_TO_REMOVE=(
+   "/.viminfo"
+   "/.history"
+   "/.zcompdump"
+   "/var/log/emerge.log"
+   "/var/lib/layman""
+)
+
 PACKAGES_TO_ADD=(
     "app-eselect/eselect-bzimage"
     "app-text/pastebunz"
@@ -141,6 +149,9 @@ rm -rf /post-upgrade.sh
 # Cleaning portage metadata cache
 rm -rf /usr/portage/metadata/md5-cache/*
 rm -rf /var/log/emerge/*
-rm -rf /var/log/entropy/**
+rm -rf /var/log/entropy/*
 rm -rf /root/* /root/.*
 rm -rf /etc/zsh
+
+# Cleanup
+rm -rf "${FILES_TO_REMOVE[@]}"
