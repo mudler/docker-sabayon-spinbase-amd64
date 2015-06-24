@@ -81,7 +81,8 @@ FILES_TO_REMOVE=(
    "/.history"
    "/.zcompdump"
    "/var/log/emerge.log"
-   "/var/lib/layman""
+   "/var/lib/layman"
+   "/var/db/pkg/*"
 )
 
 PACKAGES_TO_ADD=(
