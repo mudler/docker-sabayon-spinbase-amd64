@@ -81,8 +81,7 @@ FILES_TO_REMOVE=(
    "/.history"
    "/.zcompdump"
    "/var/log/emerge.log"
-   "/var/lib/layman"
-   "/var/db/pkg/*"
+   "/var/log/emerge-fetch.log"
 )
 
 PACKAGES_TO_ADD=(
@@ -103,7 +102,7 @@ PACKAGES_TO_ADD=(
 # Handling install/removal of packages specified in env
 
 equo repo mirrorsort sabayonlinux.org
-equo up 
+equo up
 equo rm --deep --configfiles --force-system "${PACKAGES_TO_REMOVE[@]}"
 equo i "${PACKAGES_TO_ADD[@]}"
 
