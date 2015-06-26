@@ -5,9 +5,12 @@ Attention! It's under strong development
 State: Alpha
 
 The purpose of this project is to provide an image of Sabayon spinbase.
-It is just a gentoo stage3 + entropy
+It is just a [Sabayon 
+base](https://github.com/mudler/docker-sabayon-base) 
+with upgrades 
+and tools, ready to be shipped on VM(s)/LiveCDs
 
-UPDATE: Images are also on Docker Hub [sabayon/spinbase-amd64](https://registry.hub.docker.com/u/sabayon/spinbase-amd64/) and the already squashed image, 
+Images are also on Docker Hub [sabayon/spinbase-amd64](https://registry.hub.docker.com/u/sabayon/spinbase-amd64/) and the already squashed image, 
 [sabayon/spinbase-amd64-squashed](https://registry.hub.docker.com/u/sabayon/spinbase-amd64-squashed/)
 
 ## First steps on docker

@@ -97,6 +97,7 @@ PACKAGES_TO_ADD=(
     "x11-themes/sabayon-artwork-grub"
     "app-crypt/gnupg"
     "x11-themes/sabayon-artwork-isolinux"
+    "app-crypt/shim-signed"
 )
 
 # Handling install/removal of packages specified in env
