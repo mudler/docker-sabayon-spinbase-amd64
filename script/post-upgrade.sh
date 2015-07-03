@@ -91,7 +91,6 @@ PACKAGES_TO_ADD=(
     "sys-apps/grep"
     "app-misc/sabayon-live"
     "sys-boot/grub:2"
-    "sys-kernel/linux-sabayon"
     "x11-themes/sabayon-artwork-core"
     "app-misc/sabayon-version"
     "x11-themes/sabayon-artwork-grub"
@@ -112,6 +111,30 @@ eselect bzimage set 1
 
 # Cleaning accepted licenses
 rm -rf /etc/entropy/packages/license.accept
+
+# Upgrading kernel to latest version
+kernel_target_pkg="sys-kernel/linux-sabayon"
+
+available_kernel=$(equo match "${kernel_target_pkg}" -q --showslot)
+echo
+echo "@@ Upgrading kernel to ${available_kernel}"
+echo
+kernel-switcher switch "${available_kernel}" || exit 1
+
+# now delete stale files in /lib/modules
+for slink in $(find /lib/modules/ -type l); do
+    if [ ! -e "${slink}" ]; then
+        echo "Removing broken symlink: ${slink}"
+        rm "${slink}" # ignore failure, best effort
+        # check if parent dir is empty, in case, remove
+        paren_slink=$(dirname "${slink}")
+        paren_children=$(find "${paren_slink}")
+        if [ -z "${paren_children}" ]; then
+            echo "${paren_slink} is empty, removing"
+            rmdir "${paren_slink}" # ignore failure, best effort
+        fi
+    fi
+done
 
 # Merging defaults configurations
 echo -5 | equo conf update
