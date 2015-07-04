@@ -93,6 +93,7 @@ PACKAGES_TO_ADD=(
     "sys-boot/grub:2"
     "dev-lang/perl"
     "x11-themes/sabayon-artwork-core"
+    "sys-devel/binutils"
     "app-misc/sabayon-version"
     "x11-themes/sabayon-artwork-grub"
     "app-crypt/gnupg"
