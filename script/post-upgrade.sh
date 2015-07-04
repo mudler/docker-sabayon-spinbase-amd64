@@ -91,6 +91,7 @@ PACKAGES_TO_ADD=(
     "sys-apps/grep"
     "app-misc/sabayon-live"
     "sys-boot/grub:2"
+    "dev-lang/perl"
     "x11-themes/sabayon-artwork-core"
     "app-misc/sabayon-version"
     "x11-themes/sabayon-artwork-grub"
