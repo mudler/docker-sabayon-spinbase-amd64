@@ -89,6 +89,7 @@ PACKAGES_TO_ADD=(
     "app-text/pastebunz"
     "app-admin/perl-cleaner"
     "sys-apps/grep"
+    "sys-apps/busybox"
     "app-misc/sabayon-live"
     "sys-boot/grub:2"
     "dev-lang/perl"
