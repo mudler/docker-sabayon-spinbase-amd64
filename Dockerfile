@@ -1,4 +1,4 @@
-FROM sabayon/base-amd64
+FROM sabayon/base-amd64-squashed
 
 # Accepting licenses needed to continue automatic install/upgrade
 ADD ./conf/spinbase-licenses /etc/entropy/packages/license.accept
