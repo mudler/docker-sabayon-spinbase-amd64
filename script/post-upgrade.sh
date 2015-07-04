@@ -92,6 +92,7 @@ PACKAGES_TO_ADD=(
     "app-misc/sabayon-live"
     "sys-boot/grub:2"
     "dev-lang/perl"
+    "dev-lang/python"
     "x11-themes/sabayon-artwork-core"
     "sys-devel/binutils"
     "app-misc/sabayon-version"
@@ -105,6 +106,7 @@ PACKAGES_TO_ADD=(
 
 equo repo mirrorsort sabayonlinux.org
 equo up
+#equo i $(cat /etc/sabayon-pkglist | xargs echo)
 equo rm --deep --configfiles --force-system "${PACKAGES_TO_REMOVE[@]}"
 equo i "${PACKAGES_TO_ADD[@]}"
 
