@@ -101,6 +101,7 @@ PACKAGES_TO_ADD=(
     "app-crypt/gnupg"
     "x11-themes/sabayon-artwork-isolinux"
     "app-crypt/shim-signed"
+    "dev-perl/Module-Build"
 )
 
 # Handling install/removal of packages specified in env
