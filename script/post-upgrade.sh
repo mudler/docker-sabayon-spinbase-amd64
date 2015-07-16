@@ -108,6 +108,7 @@ PACKAGES_TO_ADD=(
 
 equo repo mirrorsort sabayonlinux.org
 equo up
+
 #equo i $(cat /etc/sabayon-pkglist | xargs echo)
 equo rm --deep --configfiles --force-system "${PACKAGES_TO_REMOVE[@]}"
 equo i "${PACKAGES_TO_ADD[@]}"
