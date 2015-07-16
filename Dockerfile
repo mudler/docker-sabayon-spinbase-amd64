@@ -1,5 +1,6 @@
 FROM sabayon/base-amd64:latest
 
+MAINTAINER mudler <mudler@sabayonlinux.org>
 
 # Accepting licenses needed to continue automatic install/upgrade
 ADD ./conf/spinbase-licenses /etc/entropy/packages/license.accept
