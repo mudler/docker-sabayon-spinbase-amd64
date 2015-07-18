@@ -74,6 +74,8 @@ PACKAGES_TO_REMOVE=(
     "app-portage/eix"
     "app-portage/gentoolkit"
     "app-portage/gentoopm"
+    "app-text/docbook-xsl-stylesheets"
+    "app-text/docbook-xml-dtd"
 )
 
 FILES_TO_REMOVE=(
@@ -94,7 +96,6 @@ PACKAGES_TO_ADD=(
     "sys-boot/grub:2"
     "dev-lang/perl"
     "dev-lang/python"
-    "x11-themes/sabayon-artwork-core"
     "sys-devel/binutils"
     "app-misc/sabayon-version"
     "x11-themes/sabayon-artwork-grub"
@@ -112,6 +113,8 @@ equo up
 #equo i $(cat /etc/sabayon-pkglist | xargs echo)
 equo rm --deep --configfiles --force-system "${PACKAGES_TO_REMOVE[@]}"
 equo i "${PACKAGES_TO_ADD[@]}"
+
+equo rm --nodeps gnome-base/gsettings-desktop-schemas sys-libs/db:4.8
 
 # Setting bzimage
 eselect bzimage set 1
@@ -146,14 +149,14 @@ done
 # Merging defaults configurations
 echo -5 | equo conf update
 
-# Writing package list file
-equo q list installed -qv > /etc/sabayon-pkglist
+# Cleanup Perl cruft
+perl-cleaner --ph-clean
 
 # Cleaning equo package cache
 equo cleanup
 
-# Cleanup Perl cruft
-perl-cleaner --ph-clean
+# Writing package list file
+equo q list installed -qv > /etc/sabayon-pkglist
 
 # remove SSH keys
 rm -rf /etc/ssh/*_key*
