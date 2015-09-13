@@ -11,7 +11,7 @@ ADD ./conf/locale.nopurge /etc/locale.nopurge
 # Upgrading packages and perform post-upgrade tasks (mirror sorting, updating repository db)
 ADD ./script/post-upgrade.sh /post-upgrade.sh
 
-RUN rsync -av "rsync://rsync.at.gentoo.org/gentoo-portage/licenses/" "/usr/portage/licenses/" && ls /usr/portage/licenses -1 | xargs -0 > /etc/entropy/packages/license.accept && \
+RUN rsync -av "rsync://89.238.64.78/gentoo-portage/licenses/" "/usr/portage/licenses/" && ls /usr/portage/licenses -1 | xargs -0 > /etc/entropy/packages/license.accept && \
 	equo u && \
 	echo -5 | equo conf update 
 RUN /bin/bash /post-upgrade.sh  && \ 
