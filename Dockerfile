@@ -5,9 +5,6 @@ MAINTAINER mudler <mudler@sabayonlinux.org>
 # Accepting licenses needed to continue automatic install/upgrade
 ADD ./conf/spinbase-licenses /etc/entropy/packages/license.accept
 
-# Adding nopurge config
-ADD ./conf/locale.nopurge /etc/locale.nopurge
-
 # Upgrading packages and perform post-upgrade tasks (mirror sorting, updating repository db)
 ADD ./script/post-upgrade.sh /post-upgrade.sh
 

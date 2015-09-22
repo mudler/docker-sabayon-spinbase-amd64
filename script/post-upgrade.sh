@@ -10,7 +10,6 @@ FILES_TO_REMOVE=(
 
 PACKAGES_TO_ADD=(
     "app-eselect/eselect-bzimage"
-    "app-admin/localepurge"
     "app-text/pastebunz"
     "app-admin/perl-cleaner"
     "sys-apps/grep"
@@ -36,10 +35,8 @@ equo up
 #equo i $(cat /etc/sabayon-pkglist | xargs echo)
 equo i "${PACKAGES_TO_ADD[@]}"
 
-localepurge
-
 #small cleanup
-equo rm --nodeps gnome-base/gsettings-desktop-schemas sys-libs/db:4.8 app-admin/localepurge
+equo rm --nodeps gnome-base/gsettings-desktop-schemas sys-libs/db:4.8
 
 # Setting bzimage
 eselect bzimage set 1
