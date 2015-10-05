@@ -36,7 +36,7 @@ equo up
 equo i "${PACKAGES_TO_ADD[@]}"
 
 #small cleanup
-equo rm --nodeps gnome-base/gsettings-desktop-schemas sys-libs/db:4.8
+#equo rm --nodeps gnome-base/gsettings-desktop-schemas sys-libs/db:4.8
 
 # Setting bzimage
 eselect bzimage set 1
