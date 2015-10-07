@@ -14,6 +14,9 @@ RUN rsync -av "rsync://89.238.64.78/gentoo-portage/licenses/" "/usr/portage/lice
 RUN /bin/bash /post-upgrade.sh  && \ 
 	rm -rf /post-upgrade.sh
 
+# Regenerate all locales
+RUN locale-gen
+
 # Set environment variables.
 ENV HOME /root
 
