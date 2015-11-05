@@ -93,6 +93,10 @@ echo FONT=LatArCyrHeb-16 > /etc/vconsole.conf
 
 locale-gen
 
+# Triggering systemd-update-done
+touch /etc/.updated
+touch /var/.updated
+
 # remove LDAP keys
 rm -f /etc/openldap/ssl/ldap.pem /etc/openldap/ssl/ldap.key \
 /etc/openldap/ssl/ldap.csr /etc/openldap/ssl/ldap.crt
